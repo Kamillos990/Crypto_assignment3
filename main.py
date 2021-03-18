@@ -1,16 +1,26 @@
-# This is a sample Python script.
+from Password import Password
+from DatabaseManager import DatabaseManager
+import sqlite3
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+conn = sqlite3.connect('passwords.db')
+cursor = conn.cursor()
+db = DatabaseManager()
+db.create_table()
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    username = input("Type in your username:")
+    password1 = input("Type in password:")
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
+    while True:
+        if input('Repeat password ') == password1:
+            print("Passwords match")
+            break
+        else:
+            print('Passwords do not match. Please retry')
+
+
+    p1 = Password(username, password1)
+    db.addPassword(p1)
+    p1.verifyPassword()
